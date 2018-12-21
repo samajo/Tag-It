@@ -32,16 +32,34 @@ p {
 	color: #ffffff;
 	font-size: 1.5em;
 }
+a {
+  font-family: 'asap', sans-serif;
+  color: #ffffff;
+  text-underline-position: none;
+}
 
+::-webkit-scrollbar {
+  width: 10px;
+  background: #555;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ef4031;
+}
 #sidebar {
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	left: 0;
 	background-color: rgba(0, 0, 0, 0.8);
-	width:300px;
+	width:500px;
 	height: 100vh;
 	z-index: 10;
+  display: inline-block;
+  align-content: center;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
 }
 
 #sidebar-title {
@@ -56,7 +74,8 @@ p {
 
 #sidebar-body {
 	position: relative;
-	width: 300px;
+  align-content: center;
+	width: 450px;
 	height: 10vh;
 	padding: 30px;
 }
@@ -213,13 +232,13 @@ text { fill: black; }
 }
 
 .button-default {
-    /*background-color: #ef4031;
-    border-radius: 10px;
-    color: white;*/
-    padding: 10px 20px;
-    font-family: Courier;
+    background-color: #555;
+    size: 80px;
+    padding: 2px 2px;
+    border-radius: 3px;
+    font-family: 'asap', sans-serif;
     cursor: pointer;
-    margin: 20px;
+    margin: 5px;
     border: none;
     font-size: 18px;
     z-index: 1;
@@ -241,8 +260,8 @@ text { fill: black; }
     z-index: 1;
     top: 0;
     right: 0;
-    margin: 20px;
-    width: 120px;
+    /*margin-left: 40%;*/
+    width: 100px;
 }
 
 #layers-control a {
@@ -255,7 +274,7 @@ text { fill: black; }
     text-decoration: none;
     border-bottom: 1px solid rgba(0,0,0,0.25);
     text-align: center;
-    background-color: #ccc;
+    background-color: #555;
 }
 
 #layers-control a:last-child {
@@ -263,7 +282,7 @@ text { fill: black; }
 }
 
 #layers-control a:hover {
-    background-color: #9C27B0;
+    background-color: #aaa;
 }
 
 #layers-control a.active {
@@ -272,7 +291,24 @@ text { fill: black; }
 }
 
 #layers-control a.active:hover {
-    background: #9C27B0;
+    background: #333;
+}
+
+#tag-space {
+  font-size: .75em;
+}
+
+#tag-space a.active {
+  background-color: #ef4031;
+  color: #ffffff;
+}
+
+#tag-space a:hover {
+  background-color: #fff;
+}
+
+.img {
+  vertical-align: center;
 }
 
 .navbar-dark{
