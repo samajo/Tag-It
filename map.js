@@ -144,86 +144,74 @@ style: 'mapbox://styles/saj2mw/cjnc49sx20bih2rmu768iwzaa'});
         //     }
         // }
     });
+//---------------------------------candyChart----------------------------------------
 
-   // Select SVG from HTML and specify margins, width and height
-    var barchart = d3.select("#part-one").selectAll("#bar-chart");
-    
-    var bcMargin = {top: 20, right: 100, bottom: 30, left: 100};
-    
-    var bcWidth = +barchart.attr("width") - bcMargin.left - bcMargin.right;
-    
-    console.log(bcWidth);
+// Part one - bar chart
 
-    var bcHeight = +barchart.attr("height") - bcMargin.top - bcMargin.bottom;
+        // set the dimensions and margins of the graph
+        var bcHeight = 250;
+        var bcWidth = 400;
+        var margin = {top: 20, right: 20, bottom: 30, left: 40},
+            width = bcWidth - margin.left - margin.right,
+            height = bcHeight - margin.top - margin.bottom;
 
-    // Set up a d3 scale for the X-values. Scales in d3 help map data to a visual representation. They don't create anything visual, they just help to sort and convert data. Read more about d3 scales at https://github.com/d3/d3-scale
-    
-    var x = d3.scaleBand()
-    .rangeRound([0, bcWidth])
-    .padding(0.5);
+        // set the ranges
+        var x = d3.scaleBand()
+                  .range([0, width])
+                  .padding(0.1);
+        var y = d3.scaleLinear()
+                  .range([height, 0]);
 
-        // scaleBand() creates a Band scale which is used in a bar chart. Discrete output values are automatically computed by the scale by dividing the continuous range into uniform bands. Read more at https://github.com/d3/d3-scale/blob/master/README.md#scaleBand.
+        // append the svg object to the body of the page
+        // append a 'group' element to 'svg'
+        // moves the 'group' element to the top left margin
+        var svg = d3.select("#bar-chart")
+            
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", 
+                  "translate(" + margin.left + "," + margin.top + ")");
 
-        // rangeRound(min, max) translates the values in the data set to values within a set range, in this case a range from 0 (min) to the width of the SVG (max). Read more at https://github.com/d3/d3-scale/blob/master/README.md#band_rangeRound
-        
-        // padding(value) sets the inner and outer padding of each band to a percentage of the band width (a value between 0 and 1). Read more at https://github.com/d3/d3-scale/blob/master/README.md#band_padding
+        updateBarchart("#bar-chart");
 
-    // Set up a d3 scale for the Y-values
-    var y = d3.scaleLinear().rangeRound([bcHeight, 0]);
+    function updateBarchart(element) {
 
-    var barchartG = barchart.append("g")
-    .attr("transform", "translate(" + bcMargin.left + "," + bcMargin.top + ")");
+        var svg = d3.select(element).select("g");   // Using select instead of selectAll selects only the first svg group (g) in the bar chart. 
 
-    d3.json("data/barchart.json", function(error, data) {   // Change this file location to use a different file
-        
-        // Standard error reporting function, just in case
-        if (error) throw error;
+        svg.html(""); // clears current barchart by replacing contents with empty html
 
-        // Returning the data from the json. Change d.Letter and d.Freq below to use the key names in the json you are using
-        data.forEach(function(d) {
-            d.Letter = d.Letter;
-            d.Freq = +d.Freq; // The + sign here converts data to a number. This is a fail-safe to make sure the data is consistent, since the data needs to be numeric for the scaleLinear() function to work. 
-        });
+        // map the localstorage variables for each candy to a data array
+        var data = [];
+        for (i=0; i<layers.length; i++) {
+          // get the session variable for each candy type (the candy count)
+          // the format of each element in the array will be {candyType: "candy-bear", candyCount: 3}
+          data.push({tagType: layers[i][1], tagCount: + localStorage.getItem(layers[i])});
+        }
 
-        // Scale the range of the data
-        x.domain(data.map(function(d) { return d.Letter; }));
-        y.domain([0, d3.max(data, function(d) { return d.Freq; })]);
+        // Scale the range of the data in the domains
+        x.domain(data.map(function(d) { return d.tagType; }));
+        y.domain([0, d3.max(data, function(d) { return d.tagCount; })]);
 
-        // Set up and append an x-axis
-        barchartG.append("g")
-        .attr("class", "axis axis-x")
-        .attr("transform", "translate(0," + bcHeight + ")")
-        .call(d3.axisBottom(x));    // d3.axisBottom(scale) constructs an bottom-facing axis in the SVG, read more at https://github.com/d3/d3-axis/blob/master/README.md#axisBottom
+        // append the rectangles for the bar chart
+        svg.selectAll(".bar")
+            .data(data)
+          .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", function(d) { return x(d.tagType); })
+            .attr("width", x.bandwidth())
+            .attr("y", function(d) { return y(d.tagCount); })
+            
+            .attr("height", function(d) { return height - y(d.tagCount); });
 
-        // Set up and append a y-axis
-        barchartG.append("g")   // "g" here is an SVG group (like an Illustrator layer)
-        .attr("class", "axis axis-y")
-        .call(d3.axisLeft(y).ticks(5)) // d3.axisLeft(scale) constructs an axis at the left of the SVG. Read more at https://github.com/d3/d3-axis/blob/master/README.md#axisLeft. d3.axis.ticks() determines the number of ticks on the axis. Read more at https://github.com/d3/d3-axis/blob/master/README.md#axis_ticks
-        
-        // append a label to the y-axis
-        .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("dy", "0.7em")    // We are modifying the y-coordinates because the text has been rotated 90 degrees
-        .attr("text-anchor", "end")
-        .text("Frequency");
+        // add the x Axis
+        svg.append("g")
+            .attr("class", "x-axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
 
-
-        // Append the bars to the bar chart
-        // Note that the following code is standard d3 for adding data-driven elements to the DOM. It may seem confusing that we are selecting elements before adding them, but that's just the way d3 works! As a standard, d3 will always add data-driven elements to the DOM using the following code:
-        
-        //      elementToAddTo
-        //          .selectAll(elementsToAdd)
-        //          .data(data)
-        //          .enter()
-        //          .append(elementType)
-        
-        barchartG.selectAll(".bar")
-        .data(data)
-        .enter().append("rect")
-        .attr("class", "bar")
-        .attr("x", function(d) { return x(d.Letter); })
-        .attr("y", function(d) { return y(d.Freq); })
-        .attr("width", x.bandwidth())
-        .attr("height", function(d) { return bcHeight - y(d.Freq); });
-    });
+        // add the y Axis
+        svg.append("g")
+            .attr("class", "y-axis")
+            .call(d3.axisLeft(y));
+    }
