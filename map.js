@@ -187,6 +187,7 @@ style: 'mapbox://styles/saj2mw/cjnc49sx20bih2rmu768iwzaa'});
           // get the session variable for each candy type (the candy count)
           // the format of each element in the array will be {candyType: "candy-bear", candyCount: 3}
           data.push({tagType: layers[i][1], tagCount: + localStorage.getItem(layers[i])});
+          console.log(layers[i]);
         }
 
         // Scale the range of the data in the domains
