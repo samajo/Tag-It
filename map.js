@@ -186,8 +186,8 @@ style: 'mapbox://styles/saj2mw/cjnc49sx20bih2rmu768iwzaa'});
         for (i=0; i<layers.length; i++) {
           // get the session variable for each candy type (the candy count)
           // the format of each element in the array will be {candyType: "candy-bear", candyCount: 3}
-          data.push({tagType: stops[i], tagCount: + localStorage.getItem(stops[i].properties.UPVOTES)});
-          console.log(stops[i].properties.UPVOTES);
+          data.push({tagType: stops[i], tagCount: + localStorage.getItem(stops[i].properties.UP_VOTES)});
+          console.log(stops[i].properties.UP_VOTES);
         }
 
         // Scale the range of the data in the domains
