@@ -186,7 +186,7 @@ style: 'mapbox://styles/saj2mw/cjnc49sx20bih2rmu768iwzaa'});
         for (i=0; i<layers.length; i++) {
           // get the session variable for each candy type (the candy count)
           // the format of each element in the array will be {candyType: "candy-bear", candyCount: 3}
-          data.push({tagType: layers[i][1], tagCount: + localStorage.getItem(layers[i][0].properties.UP_VOTES)});
+          data.push({tagType: layers[i][1], tagCount: + localStorage.getItem(layers[i][0]).properties.UP_VOTES});
           console.log(layers[i][0]);
         }
 
