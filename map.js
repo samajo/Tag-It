@@ -8,12 +8,14 @@ maxBounds: [
         ],
 style: 'mapbox://styles/saj2mw/cjnc49sx20bih2rmu768iwzaa'});
 
+
+var stops = [];
 // POPUPS CODE
 
     // Create a popup on click 
     map.on('click', function(e) {   // Event listener to do some code when user clicks on the map
 
-      var stops = map.queryRenderedFeatures(e.point, {  // Query the map at the clicked point. See https://www.mapbox.com/mapbox-gl-js/example/queryrenderedfeatures/ for an example on how queryRenderedFeatures works and https://www.mapbox.com/mapbox-gl-js/api/#map#queryrenderedfeatures for documentation
+      stops = map.queryRenderedFeatures(e.point, {  // Query the map at the clicked point. See https://www.mapbox.com/mapbox-gl-js/example/queryrenderedfeatures/ for an example on how queryRenderedFeatures works and https://www.mapbox.com/mapbox-gl-js/api/#map#queryrenderedfeatures for documentation
         layers: ['bus', 'sign', 'traffic', 'safety', 'condition']    // replace this with the name of the layer from the Mapbox Studio layers panel
     });
 
@@ -132,75 +134,75 @@ style: 'mapbox://styles/saj2mw/cjnc49sx20bih2rmu768iwzaa'});
         //     }
         // }
     });
-// //---------------------------------candyChart----------------------------------------
+//---------------------------------candyChart----------------------------------------
 
-// // Part one - bar chart
+// Part one - bar chart
 
-//         // set the dimensions and margins of the graph
-//         var bcHeight = 250;
-//         var bcWidth = 400;
-//         var margin = {top: 20, right: 20, bottom: 30, left: 40},
-//             width = bcWidth - margin.left - margin.right,
-//             height = bcHeight - margin.top - margin.bottom;
+        // set the dimensions and margins of the graph
+        var bcHeight = 250;
+        var bcWidth = 400;
+        var margin = {top: 20, right: 20, bottom: 30, left: 40},
+            width = bcWidth - margin.left - margin.right,
+            height = bcHeight - margin.top - margin.bottom;
 
-//         // set the ranges
-//         var x = d3.scaleBand()
-//                   .range([0, width])
-//                   .padding(0.1);
-//         var y = d3.scaleLinear()
-//                   .range([height, 0]);
+        // set the ranges
+        var x = d3.scaleBand()
+                  .range([0, width])
+                  .padding(0.1);
+        var y = d3.scaleLinear()
+                  .range([height, 0]);
 
-//         // append the svg object to the body of the page
-//         // append a 'group' element to 'svg'
-//         // moves the 'group' element to the top left margin
-//         var svg = d3.select("#bar-chart")
+        // append the svg object to the body of the page
+        // append a 'group' element to 'svg'
+        // moves the 'group' element to the top left margin
+        var svg = d3.select("#bar-chart")
             
-//             .attr("width", width + margin.left + margin.right)
-//             .attr("height", height + margin.top + margin.bottom)
-//           .append("g")
-//             .attr("transform", 
-//                   "translate(" + margin.left + "," + margin.top + ")");
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", 
+                  "translate(" + margin.left + "," + margin.top + ")");
 
-//         updateBarchart("#bar-chart");
+        updateBarchart("#bar-chart");
 
-//     function updateBarchart(element) {
+    function updateBarchart(element) {
 
-//         var svg = d3.select(element).select("g");   // Using select instead of selectAll selects only the first svg group (g) in the bar chart. 
+        var svg = d3.select(element).select("g");   // Using select instead of selectAll selects only the first svg group (g) in the bar chart. 
 
-//         svg.html(""); // clears current barchart by replacing contents with empty html
+        svg.html(""); // clears current barchart by replacing contents with empty html
 
-//         // map the localstorage variables for each candy to a data array
-//         var data = [];
-//         for (i=0; i<layers.length; i++) {
-//           // get the session variable for each candy type (the candy count)
-//           // the format of each element in the array will be {candyType: "candy-bear", candyCount: 3}
-//           data.push({tagType: layers[i][1], tagCount: + localStorage.getItem(layers[i][0]).properties.UP_VOTES});
-//           console.log(layers[i][0]);
-//         }
+        // map the localstorage variables for each candy to a data array
+        var data = [];
+        for (i=0; i<layers.length; i++) {
+          // get the session variable for each candy type (the candy count)
+          // the format of each element in the array will be {candyType: "candy-bear", candyCount: 3}
+          data.push({tagType: layers[i][1], tagCount: + stops[i].properties.UP_VOTES});
+          console.log(layers[i][0]);
+        }
 
-//         // Scale the range of the data in the domains
-//         x.domain(data.map(function(d) { return d.tagType; }));
-//         y.domain([0, d3.max(data, function(d) { return d.tagCount; })]);
+        // Scale the range of the data in the domains
+        x.domain(data.map(function(d) { return d.tagType; }));
+        y.domain([0, d3.max(data, function(d) { return d.tagCount; })]);
 
-//         // append the rectangles for the bar chart
-//         svg.selectAll(".bar")
-//             .data(data)
-//           .enter().append("rect")
-//             .attr("class", "bar")
-//             .attr("x", function(d) { return x(d.tagType); })
-//             .attr("width", x.bandwidth())
-//             .attr("y", function(d) { return y(d.tagCount); })
+        // append the rectangles for the bar chart
+        svg.selectAll(".bar")
+            .data(data)
+          .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", function(d) { return x(d.tagType); })
+            .attr("width", x.bandwidth())
+            .attr("y", function(d) { return y(d.tagCount); })
             
-//             .attr("height", function(d) { return height - y(d.tagCount); });
+            .attr("height", function(d) { return height - y(d.tagCount); });
 
-//         // add the x Axis
-//         svg.append("g")
-//             .attr("class", "x-axis")
-//             .attr("transform", "translate(0," + height + ")")
-//             .call(d3.axisBottom(x));
+        // add the x Axis
+        svg.append("g")
+            .attr("class", "x-axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
 
-//         // add the y Axis
-//         svg.append("g")
-//             .attr("class", "y-axis")
-//             .call(d3.axisLeft(y));
-//     }
+        // add the y Axis
+        svg.append("g")
+            .attr("class", "y-axis")
+            .call(d3.axisLeft(y));
+    }
