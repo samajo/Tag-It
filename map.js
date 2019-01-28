@@ -54,12 +54,12 @@ style: 'mapbox://styles/saj2mw/cjnc49sx20bih2rmu768iwzaa'});
 
         console.log(e);
         if ($(e.target).hasClass('active')) {
-            $(e.target).removeClass('active');
+            map.getCanvas().style.cursor = 'default';
             $("#map").css('cursor', 'default');
         }
         else {
             $(e.target).addClass('active');
-    		$("#map").css('cursor', 'pointer');
+    		map.getCanvas().style.cursor = 'pointer';
     		console.log('cool');
         }
     });
