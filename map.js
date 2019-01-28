@@ -59,7 +59,7 @@ style: 'mapbox://styles/saj2mw/cjnc49sx20bih2rmu768iwzaa'});
         }
         else {
             $(e.target).addClass('active');
-    		$(this).css('cursor', 'url(svgs/tagIt.svg) 9 30 auto');
+    		$(this).css('cursor', 'url(img/tagIt.svg) 9 30 auto');
         }
     });
 
