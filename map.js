@@ -36,15 +36,9 @@ style: 'mapbox://styles/saj2mw/cjnc49sx20bih2rmu768iwzaa'});
 
       // Set the contents of the popup window
       popup.setHTML('<h2>' + stops[0].properties.LOCATION + '</h2><p>' + stops[0].properties.PROJECT_DESCRIPTION + '</p>');
-            // stops[0].properties.stop_id will become the title of the popup (<h3> element)
-            // stops[0].properties.stop_name will become the body of the popup
-
-
-        // popup.setHTML('<p>' + stops[0].properties.stop_name + '</p>')
         
-
       // Add the popup to the map 
-      popup.addTo(map);  // replace "map" with the name of the variable in line 4, if different
+      popup.addTo(map);
   });
 
     $("#tag-space").on('click', function(e) {
@@ -60,7 +54,7 @@ style: 'mapbox://styles/saj2mw/cjnc49sx20bih2rmu768iwzaa'});
         else {
             $(e.target).addClass('active');
             console.log(location.href);
-    		map.getCanvas().style.cursor = 'url(https://github.com/samajo/Tag-It/blob/master/img/tagIt.svg)';
+    		map.getCanvas().style.cursor = 'url(img/tagIt.svg)';
         }
     });
 
@@ -101,15 +95,6 @@ style: 'mapbox://styles/saj2mw/cjnc49sx20bih2rmu768iwzaa'});
     [['bus'],['bus']],
     [['sign'],['sign']],
     [['traffic'],['traffic']]
-    ];
-
-    var colors = [ // an array of the color values for each legend item
-    '#D4F4DD',
-    '#17BEBB',
-    '#0E7C7B',
-    '#D4F4DD',
-    '#17BEBB',
-    '#0E7C7B',
     ];
 
         // functions to perform when map loads
