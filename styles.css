@@ -2,7 +2,6 @@ body {
 	margin: 0;
 	padding: 0;
 	color: #ffffff;
-  cursor: default;
 }
 
 h3 {
@@ -87,6 +86,7 @@ a {
 	bottom: 0;
 	left: 0;
 	right: 0;
+  cursor: default;
 	background-color: #000000;
 	width: 100vw;	/* 100% of viewport width */
 	height: 100vh;	/* 100% of viewport height */
