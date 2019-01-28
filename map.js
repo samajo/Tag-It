@@ -48,6 +48,7 @@ style: 'mapbox://styles/saj2mw/cjnc49sx20bih2rmu768iwzaa'});
 
         console.log(e);
         if ($(e.target).hasClass('active')) {
+        	$(e.target).removeClass('active');
             map.getCanvas().style.cursor = 'default';
             $("#map").css('cursor', 'default');
         }
