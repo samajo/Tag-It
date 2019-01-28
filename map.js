@@ -59,8 +59,8 @@ style: 'mapbox://styles/saj2mw/cjnc49sx20bih2rmu768iwzaa'});
         }
         else {
             $(e.target).addClass('active');
-            console.log(document.url);
-    		map.getCanvas().style.cursor = 'url(/img/tagIt.svg)';
+            console.log(location.href);
+    		map.getCanvas().style.cursor = 'url(https://github.com/samajo/Tag-It/blob/master/img/tagIt.svg)';
         }
     });
 
