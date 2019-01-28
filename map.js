@@ -60,12 +60,12 @@ style: 'mapbox://styles/saj2mw/cjnc49sx20bih2rmu768iwzaa'});
         else {
             $(e.target).addClass('active');
     		$(this).css('cursor', 'url(/img/tagIt.svg)');
+    		console.log('cool');
         }
     });
 
     map.on('click', function(e) {
         if ($(document.getElementById("tagIt")).hasClass('active')) {
-            console.log('cool');
             var popup = new mapboxgl.Popup({
                 closeButton: true,
                 closeOnClick: true,
