@@ -37,7 +37,7 @@ var stops = [];
       popup.setLngLat(stops[0].geometry.coordinates);
 
       // Set the contents of the popup window
-      popup.setHTML('<h2>' + stops[0].properties.LOCATION + '</h2><p>' + stops[0].properties.PROJECT_DESCRIPTION + '</p>');
+      popup.setHTML('<h2>' + stops[0].properties.LOCATION + '</h2><h1>' + stops[0].properties.UP_VOTES + '</h1><p>' + stops[0].properties.PROJECT_DESCRIPTION + '</p>');
         
       // Add the popup to the map 
       popup.addTo(map);
