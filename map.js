@@ -178,7 +178,7 @@ var stops = [];
           // the format of each element in the array will be {candyType: "candy-bear", candyCount: 3}
           var iTotal = 0;
           var iCat = map.queryRenderedFeatures({layers:[i][0]});
-          var iLength = map.queryRenderedFeatures(layers:[i][0]).length;
+          var iLength = map.queryRenderedFeatures({layers:[i][0]}).length;
           console.log(layers[i][0]);
           console.log(iLength);
           for (u=0; u<iLength; u++) {
