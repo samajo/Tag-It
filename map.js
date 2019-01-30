@@ -177,7 +177,8 @@ var stops = [];
           // get the session variable for each candy type (the candy count)
           // the format of each element in the array will be {candyType: "candy-bear", candyCount: 3}
           var iTotal = 0;
-          var iCat = map.queryRenderedFeatures({layers:[i]});
+          var layTemp = layers[i][0];
+          var iCat = map.queryRenderedFeatures(layTemp);
           var iLength = map.queryRenderedFeatures({layers:[i][0]}).length;
           console.log(layers[i][0]);
           console.log(iLength);
