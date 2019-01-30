@@ -172,12 +172,20 @@ var stops = [];
         svg.html(""); // clears current barchart by replacing contents with empty html
 
         // map the localstorage variables for each candy to a data array
-        var data = [];
+        var data = []; 
         for (i=0; i<layers.length; i++) {
           // get the session variable for each candy type (the candy count)
           // the format of each element in the array will be {candyType: "candy-bear", candyCount: 3}
-          data.push({tagType: layers[i][1], tagCount: + stops[i].properties.UP_VOTES});
-          console.log(layers[i][0]);
+          var iTotal = 0;
+          var iCat = map.queryRenderedFeatures({layers: [i][0]});
+          var iLength = map.queryRenderedFeatures({layers:[i][0]}).length;
+          console.log(iCat);
+          console.log(iLength);
+          for (u=0; u<iLength; u++) {
+          	iTotal = iTotal + iCat[u].properties.UP_VOTES;
+          }
+          data.push({tagType: layers[i][1], tagCount: iTotal});
+          console.log(iTotal);
         }
 
         // Scale the range of the data in the domains
